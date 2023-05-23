@@ -1,6 +1,6 @@
 //pulling in neccessary packages for operation
 const { Model, DataTypes } = require('sequelize');
-
+//Importing DB connection
 const sequelize = require('../config/connection.js');
 
 class Category extends Model {}
