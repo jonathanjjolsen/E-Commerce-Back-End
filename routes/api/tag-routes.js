@@ -14,9 +14,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+//Gets a single tag by passing its ID number through the URL
+router.get('/:id', async (req, res) => {
+  try{
+    const singleTag = await Tag.findByPk(req.params.id, {
+      include: [{ model: Product}]
+    });
+    res.json(singleTag);
+  }catch(err){
+    res.status(500).json({message: 'Could Not Find Tag With Matching ID'});
+  }
 });
 
 router.post('/', (req, res) => {
