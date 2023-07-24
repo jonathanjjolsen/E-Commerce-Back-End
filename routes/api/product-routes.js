@@ -7,19 +7,25 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', async (req, res) => {
   try {
     const products = await Product.findAll({
-      indlude: [{model: Category }, {model: Tag}]
+      include: [{model: Category}, {model: Tag}]
     });
     res.json(products);
   } catch (err) {
-    res.status(500).json({ message: 'No Products Found'});
+    res.status(400).json({ message: 'No Products Found'});
   }
 
 });
 
-// get one product
-router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+// Gets one Product by passing the ID through the URL
+router.get('/:id', async (req, res) => {
+  try {
+    const product = await Product.findByPk(req.params.id, {
+      include: [{model: Category}, {model: Tag}]
+    });
+    res.json(product);
+  } catch (err) {
+    res.status(400).json({message: 'No Product Found With That Id'})
+  }
 });
 
 // create new product
