@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+//Finds a single category by passing the ID number through the URL
 router.get('/:id', async (req, res) => {
   try{
     const singleCategory = await Category.findByPk(req.params.id, {include: [{model: Product}]});
