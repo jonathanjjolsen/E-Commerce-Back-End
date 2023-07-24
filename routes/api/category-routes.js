@@ -22,8 +22,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
-  // create a new category
+//Create New Category
+router.post('/', async (req, res) => {
+  try {
+    const newCategory = await Category.create(req.body);
+    res.json(newCategory);
+  }catch(err){
+    res.status(500).json({message: 'Could Not Create New Category, Please Try Again'});
+  }
 });
 
 router.put('/:id', (req, res) => {
