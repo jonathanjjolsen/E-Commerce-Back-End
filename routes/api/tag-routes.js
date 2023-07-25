@@ -38,8 +38,13 @@ router.post('/', async (req, res) => {
 });
 
 //Update A Single Tag by passing the ID number through the URL
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+router.put('/:id', async (req, res) => {
+  try{
+    const updateTag = await Tag.update(req.body, {where: {id: req.params.id}});
+  res.json(updateTag);
+  } catch(err){
+    res.status(500).json('Could Not Update The Tag')
+  }
 });
 
 //Delete A Single Tag by passing the ID number through the URL
