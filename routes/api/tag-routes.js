@@ -48,8 +48,13 @@ router.put('/:id', async (req, res) => {
 });
 
 //Delete A Single Tag by passing the ID number through the URL
-router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
+router.delete('/:id', async (req, res) => {
+  try{
+    const deleteTag = await Tag.destroy({where: {id: req.params.id}});
+    res.json(deleteTag);
+  } catch(err){
+    res.status(500).json({message: 'Could Not Delete Tag, Please Try Again'})
+  }
 });
 
 module.exports = router;
