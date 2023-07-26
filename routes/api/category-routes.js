@@ -32,6 +32,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+//Update A Single Category by passing the ID number through the URL
 router.put('/:id', async (req, res) => {
   try{
     const updateCategory = await Category.update(req.body, {where: {id: req.params.id}});
@@ -41,8 +42,14 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
-  // delete a category by its `id` value
+//Deletes a Category by passing the ID number through the URL
+router.delete('/:id', async (req, res) => {
+  try{
+      const deleteCategory = await Category.destroy({where: {id: req.params.id}});
+      res.json(deleteCategory);
+  } catch(err){
+      res.status(500).json({message: 'Could Not Delete Category, Please Try Again'})
+  }
 });
 
 module.exports = router;
